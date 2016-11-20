@@ -18,9 +18,10 @@ Es ist keine Datenbank notwendig.
 
 # Installation
 
-1. git clone git@github.com:weberius/wahlergebnis.git
-2. mvn clean install
-3. mvn jetty:run
+1. git clone https://github.com/weberius/wahlergebniskonverter.git
+2. cd wahlergebniskonverter
+3. mvn clean install
+4. mvn jetty:run
 
 # License
 
