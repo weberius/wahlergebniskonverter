@@ -8,9 +8,13 @@ Der Service befindet sich in der Entwicklung
 
 #Service
 
-## /wahlergebnis/service/ping
+## /wahlergebniskonverter/service/ping
 
 Diese Schnittstelle wird verwendet um zu prüfen, ob der Service selbst erreichbar ist.
+
+## /wahlergebniskonverter/service/landtagswahl/05/05315000/erststimmen
+
+Dieser Schnittstelle liest die [Landtagswahlergebnisse Erststimmen](https://www.offenedaten-koeln.de/dataset/landtagswahl-2012-erststimmen) von [Offene Daten Köln](https://www.offenedaten-koeln.de/) aus und konvertiert sie in eine zum Service wahlergebnis kompatible JSON - Struktur.
 
 # Datenbank
 
