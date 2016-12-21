@@ -21,13 +21,21 @@ public class LandtagswahlergebnisFacadeTest {
 	}
 
 	@Test
-	public void testGetJson() throws IOException {
+	public void testGetJsonErstimmen() throws IOException {
 		String expected = IOUtils
 				.toString(this.getClass().getResourceAsStream("/landtagswahl.2012.05.05315000.erststimmen.json"));
-		Facade facade = new LandtagswahlergebnisFacade();
+		Facade facade = new LandtagswahlergebnisFacade(Art.erststimmen);
 		String actual = facade.getJson();
 		Assert.assertEquals(expected, actual);
+	}
 
+	@Test
+	public void testGetJsonZweit() throws IOException {
+		String expected = IOUtils
+				.toString(this.getClass().getResourceAsStream("/landtagswahl.2012.05.05315000.zweitstimmen.json"));
+		Facade facade = new LandtagswahlergebnisFacade(Art.zweitstimmen);
+		String actual = facade.getJson();
+		Assert.assertEquals(expected, actual);
 	}
 
 }

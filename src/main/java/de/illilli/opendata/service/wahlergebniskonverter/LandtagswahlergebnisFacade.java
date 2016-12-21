@@ -9,10 +9,10 @@ import de.illilli.opendata.service.Facade;
 
 public class LandtagswahlergebnisFacade implements Facade {
 
-	String url = Config.getProperty("landtagswahl.05.05315000.erststimmen.url");
 	private String json = new String();
 
-	public LandtagswahlergebnisFacade() throws IOException {
+	public LandtagswahlergebnisFacade(Art art) throws IOException {
+		String url = Config.getProperty("landtagswahl.05.05315000." + art.name() + ".url");
 		InputStream inputStream = new URL(url).openStream();
 		LandtagswahlPoiReader poiReader = new LandtagswahlPoiReader(inputStream);
 		json = poiReader.getJson();

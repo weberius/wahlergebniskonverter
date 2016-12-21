@@ -16,6 +16,10 @@ Diese Schnittstelle wird verwendet um zu prüfen, ob der Service selbst erreichb
 
 Dieser Schnittstelle liest die [Landtagswahlergebnisse Erststimmen](https://www.offenedaten-koeln.de/dataset/landtagswahl-2012-erststimmen) von [Offene Daten Köln](https://www.offenedaten-koeln.de/) aus und konvertiert sie in eine zum Service wahlergebnis kompatible JSON - Struktur.
 
+## /wahlergebniskonverter/service/landtagswahl/05/05315000/zweitstimmen
+
+Dieser Schnittstelle liest die [Landtagswahlergebnisse Zweitstimmen](https://www.offenedaten-koeln.de/dataset/landtagswahl-2012-zweitstimmen) von [Offene Daten Köln](https://www.offenedaten-koeln.de/) aus und konvertiert sie in eine zum Service wahlergebnis kompatible JSON - Struktur.
+
 # Datenbank
 
 Es ist keine Datenbank notwendig.

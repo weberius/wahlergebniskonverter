@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -40,23 +41,34 @@ public class Service {
 	}
 
 	/**
-	 * Beispiel: <a href=
+	 * Es sind zwei verschiedene Arten von Stimmen möglich:
+	 * <ul>
+	 * <li>erststimmen</li>
+	 * <li>zweitstimmen</li>
+	 * </ul>
+	 * Beispiele:
+	 * <ul>
+	 * <li><a href=
 	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/erststimmen">
-	 * /landtagswahl/05/05315000/erststimmen</a>
+	 * /landtagswahl/05/05315000/erststimmen</a></li>
+	 * <li><a href=
+	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/zweitstimmen">
+	 * /landtagswahl/05/05315000/zweitstimmen</a></li>
+	 * </ul>
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/landtagswahl/05/05315000/erststimmen")
-	public String getLandtagswahlergebnisse() throws IOException {
+	@Path("/landtagswahl/05/05315000/{art}")
+	public String getLandtagswahlergebnisse(@PathParam("art") String art) throws IOException {
 
-		logger.info("/landtagswahl/05/05315000/erststimmen called");
+		logger.info("/landtagswahl/05/05315000/" + art + " called");
 		request.setCharacterEncoding(Config.getProperty("encoding"));
 		response.setCharacterEncoding(Config.getProperty("encoding"));
-
-		Facade facade = new LandtagswahlergebnisFacade();
+		Art stimmart = Art.erststimmen.name().equals(art) ? Art.erststimmen : Art.zweitstimmen;
+		Facade facade = new LandtagswahlergebnisFacade(stimmart);
 		return facade.getJson();
 	}
 
