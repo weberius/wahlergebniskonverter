@@ -4,8 +4,10 @@ import java.util.Arrays;
 
 /**
  * <pre>
- * { "art":"landtagswahl",
+ * { 
+  "art":"erststimmen",
   "datum":"11.11.2016",
+  "wahl":"landtagswahl",
   "bundesland":"05",
   "gemeinde":"05315000",
   "stimmbezirke":[{
@@ -28,6 +30,7 @@ public class Wahldaten {
 	public String bundesland;
 	public String gemeinde;
 	public String datum;
+	public String wahl;
 	public Stimmbezirk[] stimmbezirke;
 
 	@Override

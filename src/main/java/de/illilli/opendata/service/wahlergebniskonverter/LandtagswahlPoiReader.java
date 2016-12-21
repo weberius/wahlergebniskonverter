@@ -24,7 +24,7 @@ import de.illilli.opendata.service.wahlergebniskonverter.model.Wahldaten;
 public class LandtagswahlPoiReader {
 
 	private static final Logger logger = Logger.getLogger(LandtagswahlPoiReader.class);
-	private Wahldaten wahldaten = new Wahldaten();;
+	private Wahldaten wahldaten = new Wahldaten();
 
 	public LandtagswahlPoiReader(InputStream inputStream) throws IOException {
 		Workbook wb = new HSSFWorkbook(inputStream);
@@ -109,7 +109,8 @@ public class LandtagswahlPoiReader {
 				rows++;
 			}
 
-			wahldaten.art = "landtagswahl";
+			wahldaten.art = "erststimmen";
+			wahldaten.wahl = "landtagswahl";
 			wahldaten.datum = "13.05.2012";
 			wahldaten.gemeinde = "05315000";
 			wahldaten.bundesland = "05";
