@@ -14,7 +14,7 @@ public class LandtagswahlergebnisFacade implements Facade {
 	public LandtagswahlergebnisFacade(Art art) throws IOException {
 		String url = Config.getProperty("landtagswahl.05.05315000." + art.name() + ".url");
 		InputStream inputStream = new URL(url).openStream();
-		LandtagswahlPoiReader poiReader = new LandtagswahlPoiReader(inputStream);
+		LandtagswahlPoiReader poiReader = new LandtagswahlPoiReader(inputStream, art);
 		json = poiReader.getJson();
 	}
 

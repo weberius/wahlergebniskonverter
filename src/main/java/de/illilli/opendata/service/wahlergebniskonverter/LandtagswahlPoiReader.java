@@ -26,7 +26,7 @@ public class LandtagswahlPoiReader {
 	private static final Logger logger = Logger.getLogger(LandtagswahlPoiReader.class);
 	private Wahldaten wahldaten = new Wahldaten();
 
-	public LandtagswahlPoiReader(InputStream inputStream) throws IOException {
+	public LandtagswahlPoiReader(InputStream inputStream, Art stimmart) throws IOException {
 		Workbook wb = new HSSFWorkbook(inputStream);
 		DataFormatter formatter = new DataFormatter();
 
@@ -109,7 +109,7 @@ public class LandtagswahlPoiReader {
 				rows++;
 			}
 
-			wahldaten.art = "erststimmen";
+			wahldaten.art = stimmart.name();
 			wahldaten.wahl = "landtagswahl";
 			wahldaten.datum = "13.05.2012";
 			wahldaten.gemeinde = "05315000";

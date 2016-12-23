@@ -18,9 +18,10 @@ public class LandtagswahlPoiReaderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Art stimmart = Art.erststimmen;
 		InputStream inputStream = LandtagswahlPoiReaderTest.class
 				.getResourceAsStream("/Landtagswahl 2012, Erststimmen.xls");
-		poiReader = new LandtagswahlPoiReader(inputStream);
+		poiReader = new LandtagswahlPoiReader(inputStream, stimmart);
 	}
 
 	@After
