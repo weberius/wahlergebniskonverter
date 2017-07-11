@@ -1,12 +1,12 @@
-#Wahlergebnis Konverter
+# Wahlergebnis Konverter
 
 Dieser Service konvertiert Wahlergebnisse in eine zum Service '[wahlergebnis](https://github.com/weberius/wahlergebnis)' kompatible json-Struktur. 
 
-#Status
+# Status
 
-Der Service befindet sich in der Entwicklung
+Die Applikation befindet sich in der Entwicklung
 
-#Service
+# Service
 
 ## /wahlergebniskonverter/service/ping
 
