@@ -17,16 +17,19 @@ import de.illilli.opendata.service.wahlergebniskonverter.model.Stimmbezirk;
 
 public class OberbuergermeisterWahlergebnisFacade implements Facade {
 
-	String url = Config.getProperty("oberbuergermeister.05315000.url");
 	private List<Stimmbezirk> data = new ArrayList<>();
 
-	public OberbuergermeisterWahlergebnisFacade() throws MalformedURLException, IOException {
-
-		InputStream inputStream = new URL(url).openStream();
+	public OberbuergermeisterWahlergebnisFacade(InputStream inputStream) throws MalformedURLException, IOException {
 		Reader reader = new InputStreamReader(inputStream, Config.getProperty("encoding"));
-
 		data = new CSVReader(reader).getData();
+	}
 
+	public OberbuergermeisterWahlergebnisFacade() throws MalformedURLException, IOException {
+		this(new URL(Config.getProperty("oberbuergermeister.05315000.url")).openStream());
+	}
+
+	public OberbuergermeisterWahlergebnisFacade(String urlString) throws MalformedURLException, IOException {
+		this(new URL(urlString).openStream());
 	}
 
 	@Override
