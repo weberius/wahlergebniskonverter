@@ -1,6 +1,7 @@
 package de.illilli.opendata.service.wahlergebniskonverter;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,10 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import de.illilli.opendata.service.Config;
+import de.illilli.opendata.service.DefaultFacade;
 import de.illilli.opendata.service.Facade;
+import de.illilli.opendata.service.wahlergebniskonverter.model.RequestToWahldaten;
+import de.illilli.opendata.service.wahlergebniskonverter.model.Wahldaten;
 
 @Path("/")
 public class Service {
@@ -72,4 +76,41 @@ public class Service {
 		return facade.getJson();
 	}
 
+	/**
+	 * <p>
+	 * Beispiel: <a href=
+	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/2017-05-14">
+	 * /landtagswahl/05/05315000/2017-05-14</a>
+	 * </p>
+	 * 
+	 * @param wahl
+	 * @param land
+	 * @param gemeinde
+	 * @param art
+	 * @return
+	 * @throws IOException
+	 * @throws MalformedURLException
+	 */
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/{wahl}/{bundesland}/{gemeinde}/{datum}")
+	public String getWahlergebnisse(@PathParam("wahl") String wahl, @PathParam("bundesland") String bundesland,
+			@PathParam("gemeinde") String gemeinde, @PathParam("datum") String datum)
+			throws MalformedURLException, IOException {
+
+		request.setCharacterEncoding(Config.getProperty("encoding"));
+		response.setCharacterEncoding(Config.getProperty("encoding"));
+
+		String urlString = request.getParameter("url");
+
+		Facade facade;
+		if (wahl != null || bundesland != null || gemeinde != null || datum != null || urlString != null) {
+			Wahldaten wahldaten = new RequestToWahldaten(wahl, bundesland, gemeinde, datum);
+			facade = new VotemanagerFacade(wahldaten, urlString);
+		} else {
+			facade = new DefaultFacade(DefaultFacade.ERROR, "no data found");
+		}
+
+		return facade.getJson();
+	}
 }
