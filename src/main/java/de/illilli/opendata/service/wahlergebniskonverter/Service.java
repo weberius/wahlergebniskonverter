@@ -45,42 +45,36 @@ public class Service {
 	}
 
 	/**
-	 * Es sind zwei verschiedene Arten von Stimmen möglich:
-	 * <ul>
-	 * <li>erststimmen</li>
-	 * <li>zweitstimmen</li>
-	 * </ul>
+	 * Für die Landtagswahlen 2017 werden die Wahlergebnisse vom Votemanager
+	 * geliefert. Die Daten liegen kommasepariert zum Download bereit. Es ist
+	 * durch Übergabe des Ortes möglich, die Daten in ein json-Format zu ändern.
+	 * <p>
 	 * Beispiele:
 	 * <ul>
 	 * <li><a href=
-	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/erststimmen">
-	 * /landtagswahl/05/05315000/erststimmen</a></li>
+	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/2017-05-14?url=http://www.stadt-koeln.de/wahlen/landtagswahl/05-2017/Landtagswahl_NRW376.csv">
+	 * /landtagswahl/05/05315000/2017-05-14?url=http://www.stadt-koeln.de/wahlen
+	 * /landtagswahl/05-2017/Landtagswahl_NRW376.csv</a></li>
+	 * </ul>
+	 * <ul>
+	 * <p>
+	 * Für die Landtagswahl 2012 in NRW liegen für Köln Excel Dateien zur
+	 * Verfügung. Die Wahlergebnisse werden nach erststimmen und zweitstimmen
+	 * unterschieden. Diese müssen durch den Übergabeparameter 'art' explizit
+	 * angefordert werden. Wird keine Stimmart angegeben, werden automatisch die
+	 * zweitstimmen zurückgeliefert.
+	 * </p>
+	 * <p>
+	 * Beispiele:
+	 * </p>
 	 * <li><a href=
-	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/zweitstimmen">
-	 * /landtagswahl/05/05315000/zweitstimmen</a></li>
+	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/2012-05-13?art=erststimmen">
+	 * /landtagswahl/05/05315000/2012-05-13?art=erststimmen</a></li>
+	 * <li><a href=
+	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/2012-05-13?art=zweitstimmen">
+	 * /landtagswahl/05/05315000/2012-05-13?art=zweitstimmen</a></li>
 	 * </ul>
 	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/landtagswahl/05/05315000/{art}")
-	public String getLandtagswahlergebnisse(@PathParam("art") String art) throws IOException {
-
-		logger.info("/landtagswahl/05/05315000/" + art + " called");
-		request.setCharacterEncoding(Config.getProperty("encoding"));
-		response.setCharacterEncoding(Config.getProperty("encoding"));
-		Art stimmart = Art.erststimmen.name().equals(art) ? Art.erststimmen : Art.zweitstimmen;
-		Facade facade = new LandtagswahlergebnisFacade(stimmart);
-		return facade.getJson();
-	}
-
-	/**
-	 * <p>
-	 * Beispiel: <a href=
-	 * "http://localhost:8080/wahlergebniskonverter/service/landtagswahl/05/05315000/2017-05-14">
-	 * /landtagswahl/05/05315000/2017-05-14</a>
 	 * </p>
 	 * 
 	 * @param wahl
@@ -105,8 +99,18 @@ public class Service {
 
 		Facade facade;
 		if (wahl != null || bundesland != null || gemeinde != null || datum != null || urlString != null) {
-			Wahldaten wahldaten = new RequestToWahldaten(wahl, bundesland, gemeinde, datum);
-			facade = new VotemanagerFacade(wahldaten, urlString);
+			if ("landtagswahl".equals(wahl) && "05".equals(bundesland) && "05315000".equals(gemeinde)
+					&& "2012-05-13".equals(datum)) {
+				String art = request.getParameter("art");
+				Art stimmart = Art.erststimmen.name().equals(art) ? Art.erststimmen : Art.zweitstimmen;
+				facade = new LandtagswahlergebnisFacade(stimmart);
+			} else if ("landtagswahl".equals(wahl) && "05".equals(bundesland) && "05315000".equals(gemeinde)
+					&& "2017-05-14".equals(datum)) {
+				Wahldaten wahldaten = new RequestToWahldaten(wahl, bundesland, gemeinde, datum);
+				facade = new VotemanagerFacade(wahldaten, urlString);
+			} else {
+				facade = new DefaultFacade(DefaultFacade.INFO, "not supported");
+			}
 		} else {
 			facade = new DefaultFacade(DefaultFacade.ERROR, "no data found");
 		}
