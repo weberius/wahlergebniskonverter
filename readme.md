@@ -52,7 +52,7 @@ Dann wird das Skript angelegt:
 
     vi updateWahlergebniskonverter.sh
 
-Folgende Einträge müssen im Skript vorgenommen werden:
+Folgende Einträge müssen im Skript vorgenommen werden.
 
     cd wahlergebniskonverter
     git pull
@@ -62,7 +62,8 @@ Folgende Einträge müssen im Skript vorgenommen werden:
 
 Das Projekt wird dann mit folgendem Aufruf aktualisiert:
 
-   ./updateWahlergebniskonverter.sh
+    ./updateWahlergebniskonverter.sh
+
 
 # License
 
