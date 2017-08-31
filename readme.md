@@ -26,10 +26,43 @@ Es ist keine Datenbank notwendig.
 
 # Installation
 
+Zur Installation werden Java und Tomcat vorausgesetzt. Die Installation erfolgt z.B. auf einer ubuntu Installation. Folgende Befehle müssen ausgeführt werden:
+
+## Projekt
+
 1. git clone https://github.com/weberius/wahlergebniskonverter.git
 2. cd wahlergebniskonverter
 3. mvn clean install
-4. mvn jetty:run
+
+## System
+
+Zunächst werden java und maven installiert. Zum Ausführen der Applikation wird weiterhin ein tomcat7 benötigt.
+
+    sudo apt-get install openjdk-8-jdk openjdk-8-demo openjdk-8-doc openjdk-8-jre-headless openjdk-8-source
+    sudo apt install maven
+    sudo apt-get install tomcat7 tomcat7-admin
+    
+Zum einfachen deploy der Anwendung kann ein sh-Skript angelegt werden. Dabei wird unterstellt, dass es sich um eine Standartinstallation handelt.
+
+Zunächst muss das Projekt von github kopiert werden:
+
+    git clone https://github.com/weberius/wahlergebniskonverter.git
+    
+Dann wird das Skript angelegt:
+
+    vi updateWahlergebniskonverter.sh
+
+Folgende Einträge müssen im Skript vorgenommen werden:
+
+    cd wahlergebniskonverter
+    git pull
+    mvn clean install
+    chmod 775 target/wahlergebniskonverter.war
+    mv target/wahlergebniskonverter.war /var/lib/tomcat7/webapps/
+
+Das Projekt wird dann mit folgendem Aufruf aktualisiert:
+
+   ./updateWahlergebniskonverter.sh
 
 # License
 
